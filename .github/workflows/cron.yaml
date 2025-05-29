@@ -1,14 +1,16 @@
-name: Daily Notifications
+name: Every 6 Hours Notification
 
 on:
   schedule:
     - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
   notify:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Trigger Notifications
+      - name: Trigger Notification
         run: |
           curl -G "${{ secrets.VERCEL_CRON_URL }}" \
             --data-urlencode "secret=${{ secrets.CRON_SECRET }}"
