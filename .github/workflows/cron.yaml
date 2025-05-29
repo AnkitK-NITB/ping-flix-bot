@@ -1,0 +1,14 @@
+name: Daily Notifications
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # 8:00 AM UTC every day
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Notifications
+        run: |
+          curl -G "${{ secrets.VERCEL_CRON_URL }}" \
+            --data-urlencode "secret=${{ secrets.CRON_SECRET }}"
