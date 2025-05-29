@@ -4,11 +4,12 @@ dotenv.config();
 import { bot } from '../lib/bot/telegraf.js';
 
 export default async (req, res) => {
-  try {
-    await bot.handleUpdate(req.body, res);
-  } catch (err) {
-    console.error('Error handling update:', err);
-    res.status(500).send('Internal Server Error');
+  if (req.method === 'POST') {
+    // Process incoming updates from Telegram
+    await bot.handleUpdate(req.body);
+    res.status(200).send('OK');
+  } else {
+    res.status(405).send('Method Not Allowed');
   }
 };
 
